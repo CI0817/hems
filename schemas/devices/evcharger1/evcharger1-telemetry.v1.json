@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/evcharger1/evcharger1-telemetry.v1.json",
+    "title": "EV Charger 1 Telemetry Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/telemetry.json"
+        },
+        {
+            "properties": {
+                "schemaVersion": {
+                    "const": "1.0.0"
+                },
+                "payload": {
+                    "type": "object",
+                    "properties": {
+                        "SoC": {
+                            "type": "number",
+                            "description": "State of Charge of the EV in percentage",
+                            "example": 75.0
+                        },
+                        "targetSoC": {
+                            "type": "number",
+                            "description": "Target State of Charge in percentage",
+                            "example": 80.0
+                        },
+                        "batteryCapacity": {
+                            "type": "number",
+                            "description": "Total capacity of the battery in kilowatt-hours",
+                            "example": 60.0
+                        },
+                        "ImportPower": {
+                            "type": "number",
+                            "description": "Real-time charging power in kilowatts",
+                            "example": 2000.0
+                        },
+                        "ImportIntervalEnergy": {
+                            "type": "number",
+                            "description": "Energy imported during the current interval in kilowatt-hours",
+                            "example": 5.0
+                        }
+                    },
+                    "required": ["SoC", "targetSoC", "batteryCapacity", "ImportPower", "ImportIntervalEnergy"],
+                    "additionalProperties": false,
+                    "description": "Payload containing telemetry data for EV Charger 1"
+                }
+            }
+        }
+    ]
+}
