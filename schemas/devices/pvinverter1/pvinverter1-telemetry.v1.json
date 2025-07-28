@@ -14,35 +14,15 @@
                 "payload": {
                     "type": "object",
                     "properties": {
-                        "AphA": {
-                            "type": "number",
-                            "description": "Phase A current in Amperes",
-                            "example": 5.0
-                        },
-                        "PhVPhA": {
-                            "type": "number",
-                            "description": "Phase A voltage in Volts",
-                            "example": 230.0
-                        },
                         "W": {
                             "type": "number",
                             "description": "Active power in Watts",
                             "example": 1500.0
                         },
-                        "Hz": {
-                            "type": "number",
-                            "description": "Frequency in Hertz",
-                            "example": 50.0
-                        },
                         "WH": {
                             "type": "number",
                             "description": "Energy in Watt-hours",
                             "example": 10000.0
-                        },
-                        "TmpCab": {
-                            "type": "number",
-                            "description": "Cabinet temperature in degrees Celsius",
-                            "example": 45.0
                         },
                         "St": {
                             "type": "string",
@@ -50,7 +30,9 @@
                             "example": "OK"
                         }
                     },
-                    "required": ["AphA", "PhVPhA", "W", "Hz", "WH", "TmpCab", "St"]
+                    "required": ["W", "WH", "St"],
+                    "additionalProperties": false,
+                    "description": "Payload containing telemetry data for PV Inverter 1"
                 }
             }
         }

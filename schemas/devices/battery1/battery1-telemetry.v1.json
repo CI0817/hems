@@ -1,0 +1,41 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/battery1/battery1-telemetry.v1.json",
+    "title": "Battery 1 Telemetry Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/telemetry.json"
+        },
+        {
+            "properties": {
+                "schemaVersion": {
+                    "const": "1.0.0"
+                },
+                "payload": {
+                    "type": "object",
+                    "properties": {
+                        "SoC": {
+                            "type": "number",
+                            "description": "State of Charge in percentage",
+                            "example": 85.0
+                        },
+                        "W": {
+                            "type": "number",
+                            "description": "Active power in Watts",
+                            "example": 1200.0
+                        },
+                        "ChaSt": {
+                            "type": "string",
+                            "enum": ["OFF", "EMPTY", "DISCHARGING", "CHARGING", "FULL", "HOLDING", "TESTING"],
+                            "description": "Charging status of the battery",
+                            "example": "Charging"
+                        }
+                    },
+                    "required": ["SoC", "W", "ChaSt"],
+                    "additionalProperties": false,
+                    "description": "Payload containing telemetry data for Battery 1"
+                }
+            }
+        }
+    ]
+}
