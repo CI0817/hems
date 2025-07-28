@@ -64,3 +64,4 @@ The mandatory information are:
 - **messageType**: Type of the message.
 - **payload**: Type-specific content.
 
+Below that, we can define the three different schemas for each message type, separating the concerns and 

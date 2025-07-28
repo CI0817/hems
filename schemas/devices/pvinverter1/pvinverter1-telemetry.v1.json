@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/pvinverter1/pvinverter1-telemetry.v1.json",
+    "title": "PV Inverter 1 Telemetry Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/telemetry.json"
+        },
+        {
+            "properties": {
+                "schemaVersion": {
+                    "const": "1.0.0"
+                },
+                "payload": {
+                    "type": "object",
+                    "properties": {
+                        "AphA": {
+                            "type": "number",
+                            "description": "Phase A current in Amperes",
+                            "example": 5.0
+                        },
+                        "PhVPhA": {
+                            "type": "number",
+                            "description": "Phase A voltage in Volts",
+                            "example": 230.0
+                        },
+                        "W": {
+                            "type": "number",
+                            "description": "Active power in Watts",
+                            "example": 1500.0
+                        },
+                        "Hz": {
+                            "type": "number",
+                            "description": "Frequency in Hertz",
+                            "example": 50.0
+                        },
+                        "WH": {
+                            "type": "number",
+                            "description": "Energy in Watt-hours",
+                            "example": 10000.0
+                        },
+                        "TmpCab": {
+                            "type": "number",
+                            "description": "Cabinet temperature in degrees Celsius",
+                            "example": 45.0
+                        },
+                        "St": {
+                            "type": "string",
+                            "description": "Status of the inverter",
+                            "example": "OK"
+                        }
+                    },
+                    "required": ["AphA", "PhVPhA", "W", "Hz", "WH", "TmpCab", "St"]
+                }
+            }
+        }
+    ]
+}
