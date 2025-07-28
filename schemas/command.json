@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/command.json",
+    "title": "Command Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/base-envelope.json"
+        },
+        {
+            "properties": {
+                "messageType": {
+                    "const": "command",
+                    "description": "This message is specifically a command message"
+                }
+            }
+        }
+    ]
+}

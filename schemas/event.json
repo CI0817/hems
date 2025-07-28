@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/event.json",
+    "title": "Event Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/base-envelope.json"
+        },
+        {
+            "properties": {
+                "messageType": {
+                    "const": "event",
+                    "description": "This message is specifically an event message"
+                }
+            }
+        }
+    ]
+}
