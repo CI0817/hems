@@ -37,7 +37,7 @@ We can break down the messages into **three** different types:
 
 This project uses **JSON** as the messaging package, since it is relatively lightweight and easy to parse and debug. Furthermore, we use **JSON Schema** to validate the messages ensuring that the messages strictly follow a standard format.
 
-### MQTT Topic Definition
+#### MQTT Topic Definition
 
 The transfer of messages between the sub-system can be done over **MQTT**, which is the de-facto IoT messaging protocol due to its lightweight, publish-subscribe model allowing ease of integration and future expansions.
 
@@ -52,4 +52,15 @@ Where:
 - **gateway_id** is the ID of the gateway the message passes through.
 - **message_type** is one of three types of messages: telemetry, command, or event.
 - **device_id** is the ID of the device that sent the data or is going to receive the command.
+
+#### Base Envelope and Message Type Layer
+
+The JSON Schema structure is influenced by the MQTT topics. It needs a base layer of the data that contains the mandatory information in a schema, called the **base-envelope**.
+
+The mandatory information are:
+- **messageID**: Unique ID of the message for tracing
+- **timestamp**: ISO-8601 time when the gateway publish the message.
+- **gatewayID**: ID of the gateway that publishes the message.
+- **messageType**: Type of the message.
+- **payload**: Type-specific content.
 

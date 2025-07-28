@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/base-envelope.json",
+    "title": "Base Envelope",
+    "type": "object",
+    "properties": {
+        "schemaVersion": {
+            "type": "string",
+            "example": "1.0.0",
+            "description": "The version of the schema being used for this message"
+        },
+        "messageId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "description": "A unique identifier for the message, formatted as a UUID"
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-01T12:00:00Z",
+            "description": "The timestamp when the message was published, in ISO 8601 format"
+        },
+        "gatewayId": {
+            "type": "string",
+            "example": "gateway1",
+            "description": "The identifier of the gateway that published the message"
+        },
+        "messageType": {
+            "type": "string",
+            "enum": ["telemetry", "command", "event"],
+            "description": "The type of message being sent, such as telemetry, command, or event"
+        },
+        "payload": {
+            "type": "object",
+            "description": "The actual data being sent in the message, which can vary based on the message type",
+            "additionalProperties": true
+        }
+    },
+    "required": ["schemaVersion", "messageId", "timestamp", "gatewayId", "messageType", "payload"],
+    "additionalProperties": false,
+    "description": "Base envelope schema for messages in the system, providing a standard structure for all messages."
+}
