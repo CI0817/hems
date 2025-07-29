@@ -1,0 +1,97 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/weather1/weather1-telemetry.v1.json",
+    "title": "Weather 1 Telemetry Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/telemetry.json"
+        },
+        {
+            "properties": {
+                "schemaVersion": {
+                    "const": "1.0.0"
+                },
+                "payload": {
+                    "type": "object",
+                    "properties": {
+                        "tzOffset": {
+                            "type": "integer",
+                            "description": "Seconds offset from UTC (e.g. ‑18000 = UTC‑5)",
+                            "example": -18000
+                        },
+                        "current": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "dt":        { "type": "integer", "description": "Unix epoch (s)",            "example": 1684929490 },
+                                "temp":      { "type": "number",  "description": "Air temperature (°C)",      "example": 19.4 },
+                                "humidity":  { "type": "integer", "description": "Relative humidity (%)",     "example": 89 },
+                                "clouds":    { "type": "integer", "description": "Cloud cover (%)",           "example": 53 },
+                                "uvi":       { "type": "number",  "description": "UV index",                 "example": 0.2 }
+                            },
+                            "required": ["dt","temp","humidity","clouds","uvi"]
+                        },
+                        "hourly": {
+                            "type": "array",
+                            "description": "Next-day hourly forecast (use first 24-48 entries)",
+                            "minItems": 1,
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "dt":         { "type": "integer", "description": "Unix epoch (s)",                 "example": 1684926000 },
+                                    "temp":       { "type": "number",  "description": "Temperature (°C)",               "example": 18.9 },
+                                    "humidity":   { "type": "integer", "description": "Humidity (%)",                   "example": 91 },
+                                    "clouds":     { "type": "integer", "description": "Cloud cover (%)",                "example": 54 },
+                                    "uvi":        { "type": "number",  "description": "UV index",                       "example": 0 },
+                                    "wind_speed": { "type": "number",  "description": "Wind speed (m/s)",               "example": 2.6 },
+                                    "pop":        { "type": "number",  "description": "Precip. probability (0-1)",      "example": 0.15 },
+                                    "rain":       { "type": "number",  "description": "Rain in last hour (mm, 0 if n/a)","example": 0 }
+                                },
+                                "required": ["dt","temp","humidity","clouds","pop"]
+                            }
+                        },
+                        "daily": {
+                            "type": "array",
+                            "description": "3-5 day daily forecast",
+                            "minItems": 1,
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "dt":        { "type": "integer", "description": "Unix epoch (s)",            "example": 1684951200 },
+                                    "sunrise":   { "type": "integer", "description": "Sunrise epoch (s)",         "example": 1684926645 },
+                                    "sunset":    { "type": "integer", "description": "Sunset epoch (s)",          "example": 1684977332 },
+                                    "temp_min":  { "type": "number",  "description": "Day minimum temp (°C)",     "example": 17.5 },
+                                    "temp_max":  { "type": "number",  "description": "Day maximum temp (°C)",     "example": 27.2 },
+                                    "clouds":    { "type": "integer", "description": "Cloud cover (%)",           "example": 92 },
+                                    "pop":       { "type": "number",  "description": "Precip. probability (0-1)", "example": 0.47 },
+                                    "rain":      { "type": "number",  "description": "Total rain (mm, 0 if n/a)", "example": 0.15 },
+                                    "uvi":       { "type": "number",  "description": "Daily UV index",            "example": 9.2 }
+                                },
+                                "required": ["dt","sunrise","sunset","temp_min","temp_max","clouds","pop"]
+                            }
+                        },
+                        "alerts": {
+                            "type": "array",
+                            "description": "Active severe weather alerts",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "event": { "type": "string",  "description": "Alert title",          "example": "Small Craft Advisory" },
+                                    "start": { "type": "integer", "description": "Start epoch (s)",      "example": 1684952747 },
+                                    "end":   { "type": "integer", "description": "End epoch (s)",        "example": 1684988747 }
+                                },
+                                "required": ["event","start","end"]
+                            }
+                        }
+                    },
+                    "required": ["tzOffset","current","hourly","daily"],
+                    "additionalProperties": false,
+                    "description": "Payload containing telemetry data for Weather 1"
+                }
+            }
+        }
+    ]
+}
