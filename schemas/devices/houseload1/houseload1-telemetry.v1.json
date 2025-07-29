@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/houseload1/houseload1-telemetry.v1.json",
+    "title": "House Load 1 Telemetry Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/telemetry.json"
+        },
+        {
+            "properties": {
+                "schemaVersion": {
+                    "const": "1.0.0"
+                },
+                "payload": {
+                    "type": "object",
+                    "properties": {
+                        "act_power": {
+                            "type": "number",
+                            "description": "Active power in watts",
+                            "example": 1500.0
+                        }
+                    },
+                    "required": ["act_power"],
+                    "additionalProperties": false,
+                    "description": "Payload containing telemetry data for House Load 1"
+                }
+            }
+        }
+    ]
+}

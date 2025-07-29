@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/maingrid1/maingrid1-telemetry.v1.json",
+    "title": "Main Grid 1 Telemetry Message Schema",
+    "allOf": [
+        {
+            "$ref": "https://example.com/schemas/telemetry.json"
+        },
+        {
+            "properties": {
+                "schemaVersion": {
+                    "const": "1.0.0"
+                },
+                "payload": {
+                    "type": "object",
+                    "properties": {
+                        "act_power": {
+                            "type": "number",
+                            "description": "Active power in watts",
+                            "example": 5000.0
+                        }
+                    },
+                    "required": ["act_power"],
+                    "additionalProperties": false,
+                    "description": "Payload containing telemetry data for Main Grid 1"
+                }
+            }
+        }
+    ]
+}
