@@ -1,42 +1,53 @@
 {
-    "$schema": "https://json-schema.org/draft-07/schema#",
-    "$id": "https://example.com/schemas/devices/battery1/battery1-command.json",
-    "title": "Battery 1 Command Message Schema",
-    "allOf": [
-        {
-            "$ref": "https://example.com/schemas/command.json"
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/devices/battery1/battery1-command.json",
+  "title": "Battery 1 Command Message Schema",
+  "allOf": [
+    { "$ref": "https://example.com/schemas/command.json" },
+    {
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
         },
-        {
-            "properties": {
-                "schemaVersion": {
-                    "const": "1.0.0"
+        "payload": {
+          "type": "object",
+          "oneOf": [
+            {
+              "title": "Set SoC Reservation",
+              "type": "object",
+              "properties": {
+                "SoCRsvMax": {
+                  "type": "number",
+                  "description": "Reserved maximum State of Charge (%)",
+                  "example": 90.0
                 },
-                "payload": {
-                    "type": "object",
-                    "properties": {
-                        "SoCRsvMax": {
-                            "type": "number",
-                            "description": "Reserved maximum State of Charge in percentage",
-                            "example": 90.0
-                        },
-                        "SoCRsvMin": {
-                            "type": "number",
-                            "description": "Reserved minimum State of Charge in percentage",
-                            "example": 10.0
-                        },
-                        "SetOp": {
-                            "type": "string",
-                            "enum": ["CONNECT", "DISCONNECT"],
-                            "description": "Operation to set for the battery",
-                            "example": "CONNECT"
-                        }
-                    },
-                    "required": ["SetOp"],
-                    "additionalProperties": false,
-                    "description": "Payload containing command data for Battery 1"
+                "SoCRsvMin": {
+                  "type": "number",
+                  "description": "Reserved minimum State of Charge (%)",
+                  "example": 10.0
                 }
+              },
+              "required": ["SoCRsvMax", "SoCRsvMin"],
+              "additionalProperties": false
+            },
+            {
+              "title": "Set Connection State",
+              "type": "object",
+              "properties": {
+                "SetOp": {
+                  "type": "string",
+                  "enum": ["CONNECT", "DISCONNECT"],
+                  "description": "Operation to set for the battery",
+                  "example": "CONNECT"
+                }
+              },
+              "required": ["SetOp"],
+              "additionalProperties": false
             }
+          ],
+          "description": "Payload containing command data for Battery 1"
         }
-    ]
-    
+      }
+    }
+  ]
 }

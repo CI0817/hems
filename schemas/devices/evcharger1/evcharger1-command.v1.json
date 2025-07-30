@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/devices/evcharger1/evcharger1-command.json",
+  "title": "EV Charger 1 Command Message Schema",
+  "allOf": [
+    { "$ref": "https://example.com/schemas/command.json" },
+    {
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+
+        "payload": {
+          "type": "object",
+          "oneOf": [
+            {
+              "title": "Start Transaction",
+              "type": "object",
+              "properties": {
+                "command": { "const": "startTransaction" },
+                "evseId":   { "type": "integer", "minimum": 1 },
+                "idToken":  { "type": "string",  "minLength": 1 }
+              },
+              "required": ["command", "evseId", "idToken"],
+              "additionalProperties": false
+            },
+            {
+              "title": "Stop Transaction",
+              "type": "object",
+              "properties": {
+                "command":      { "const": "stopTransaction" },
+                "transactionId":{ "type": "integer", "minimum": 1 }
+              },
+              "required": ["command", "transactionId"],
+              "additionalProperties": false
+            },
+            {
+              "title": "Set Simple Charging Profile",
+              "type": "object",
+              "properties": {
+                "command":    { "const": "setChargingProfile" },
+                "evseId":     { "type": "integer", "minimum": 1 },
+                "limitAmps":  { "type": "integer", "minimum": 6, "maximum": 63 },
+                "startTime":  { "type": "string",  "format": "date-time" },
+                "durationSec":{ "type": "integer", "minimum": 0 }
+              },
+              "required": ["command", "evseId", "limitAmps"],
+              "additionalProperties": false
+            },
+            {
+              "title": "Clear Charging Profile",
+              "type": "object",
+              "properties": {
+                "command": { "const": "clearChargingProfile" },
+                "evseId":  { "type": "integer", "minimum": 1 }
+              },
+              "required": ["command", "evseId"],
+              "additionalProperties": false
+            }
+          ],
+          "description": "Payload containing the minimal command data for EV Charger 1"
+        }
+      }
+    }
+  ]
+}
