@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/devices/maingrid1/maingrid1-command.json",
+  "title": "Main Grid 1 Command Message Schema",
+  "description": "Commands for Main Grid 1.",
+  "allOf": [
+    { "$ref": "https://example.com/schemas/command.json" },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "payload": {
+          "description": "Exactly one supported control action for the selected channel.",
+          "oneOf": [
+            {
+              "title": "Relay State Change",
+              "type": "object",
+              "properties": {
+                "channel": {
+                  "type": "integer",
+                  "enum": [0, 1],
+                  "description": "0 = house-load, 1 = grid"
+                },
+                "action": {
+                  "type": "string",
+                  "enum": ["on", "off", "toggle"],
+                  "description": "Desired relay state (maps to Switch.Set / Switch.Toggle)."
+                },
+                "toggleAfter": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Optional pulse width in seconds when using Switch.Set with `on:true`."
+                }
+              },
+              "required": ["channel", "action"],
+              "additionalProperties": false
+            },
+            {
+              "title": "Reset Energy Counters",
+              "type": "object",
+              "properties": {
+                "channel": {
+                  "type": "integer",
+                  "enum": [0, 1],
+                  "description": "0 = house-load, 1 = grid"
+                },
+                "resetCounters": {
+                  "type": "boolean",
+                  "const": true,
+                  "description": "Invoke EMData.ResetCounters for this meter."
+                }
+              },
+              "required": ["channel", "resetCounters"],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": ["schemaVersion", "payload"],
+      "additionalProperties": false
+    }
+  ]
+}
