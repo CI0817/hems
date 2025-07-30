@@ -1,0 +1,47 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/devices/energymarket1/energymarket1-telemetry.v1.json",
+    "title": "Energy Market 1 Telemetry Message Schema",
+    "allOf": [
+    { "$ref": "https://example.com/schemas/telemetry.json" },
+    {
+        "properties": {
+            "schemaVersion": { "const": "1.0.0" },
+            "payload": {
+                "type": "object",
+                "properties": {
+                    "ts": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "ISO-8601 timestamp of the price sample (with time-zone)"
+                    },
+                    "region": {
+                    "type": "string",
+                    "enum": ["VIC1", "NSW1", "SA1", "QLD1", "TAS1"],
+                    "description": "AEMO regional reference node code"
+                    },
+                    "price_c_per_kwh": {
+                        "type": "number",
+                        "minimum": 0,
+                        "description": "Current spot price in cents per kWh"
+                    },
+                    "forecast_c_per_kwh": {
+                        "type": "array",
+                        "items": { "type": "number" },
+                        "minItems": 1,
+                        "description": "Forward price trajectory at the same time-step as spot"
+                    },
+                    "step_minutes": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "Interval between successive forecast points; defaults to 5 or 30"
+                    }
+                },
+                  "required": ["region", "price_c_per_kwh"],
+                "additionalProperties": false,
+                "description": "Payload containing telemetry data for Energy Market 1"
+            }
+        }
+    }
+    ]
+}
