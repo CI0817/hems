@@ -1,47 +1,57 @@
 {
-    "$schema": "https://json-schema.org/draft-07/schema#",
-    "$id": "https://example.com/schemas/devices/pvinverter1/pvinverter1-command.json",
-    "title": "PV Inverter 1 Command Message Schema",
-    "allOf": [
-        {
-            "$ref": "https://example.com/schemas/command.json"
-        },
-        {
-            "properties": {
-                "schemaVersion": {
-                    "const": "1.0.0"
-                },
-                "payload": {
-                    "type": "object",
-                    "properties": {
-                        "conn": {
-                            "type": "integer",
-                            "enum": [0, 1],
-                            "description": "SunSpec \"Conn\". 0=stand-by / trip, 1=run."
-                        },
-                        "wMaxLimPct": {
-                            "type": "number",
-                            "minimum": 0,
-                            "maximum": 100,
-                            "multipleOf": 0.01,
-                            "description": "SunSpec \"WMaxLimPct\". Real-power cap as % of nameplate (0-100, 0.01% resolution)."
-                        },
-                        "wMaxLimEna": {
-                            "type": "boolean",
-                            "description": "SunSpec \"WMaxLim_Ena\". true=apply the limit in wMaxLimPct, false=clear."
-                        },
-                        "revertTime": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 65535,
-                            "description": "SunSpec \"WMaxLimPct_RvrtTms\". Optional timeout (s) after which the inverter cancels the limit."
-                        }
-                    },
-                    "required": ["conn"],
-                    "additionalProperties": false,
-                    "description": "Payload containing command data for PV Inverter 1"
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/schemas/devices/pvinverter1/pvinverter1-command.json",
+  "title": "PV Inverter 1 Command Message Schema",
+  "allOf": [
+    { "$ref": "https://example.com/schemas/command.json" },
+    {
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "payload": {
+          "type": "object",
+          "oneOf": [
+            {
+              "title": "Set Connection State",
+              "type": "object",
+              "properties": {
+                "conn": {
+                  "type": "integer",
+                  "enum": [0, 1],
+                  "description": "SunSpec “Conn”: 0=stand-by/trip, 1=run"
                 }
+              },
+              "required": ["conn"],
+              "additionalProperties": false
+            },
+            {
+              "title": "Set Real-Power Limit",
+              "type": "object",
+              "properties": {
+                "wMaxLimPct": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "multipleOf": 0.01,
+                  "description": "SunSpec “WMaxLimPct”: real-power cap as % of nameplate"
+                },
+                "wMaxLimEna": {
+                  "type": "boolean",
+                  "description": "SunSpec “WMaxLim_Ena”: true=apply limit, false=clear"
+                },
+                "revertTime": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 65535,
+                  "description": "SunSpec “WMaxLimPct_RvrtTms”: timeout (s) after which inverter clears limit"
+                }
+              },
+              "required": ["wMaxLimPct", "wMaxLimEna"],
+              "additionalProperties": false
             }
+          ],
+          "description": "Payload containing command data for PV Inverter 1"
         }
-    ]
+      }
+    }
+  ]
 }
